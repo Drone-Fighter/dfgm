@@ -1,0 +1,44 @@
+{:webserver
+ {:ip                 "0.0.0.0"
+  :port               3000
+  :thread             4
+  :queue-size         20480
+  :worker-name-prefix "worker-"
+  :max-body           8388608
+  :max-ws             4194304
+  :max-line           4096}
+
+ :db
+ {:adapter       :mysql
+  :database-name "dfgm"
+  :server-name   "localhost"
+  :port-number   3306
+  :username      "root"
+  :password      nil}
+
+ :app
+ {:endpoint "dfgm.routes/main-routes"
+
+  ;; See: https://github.com/ring-clojure/ring-defaults
+  :middleware {:params    {:urlencoded true
+                           :multipart  true
+                           :nested     true
+                           :keywordize true}
+               :cookies   true
+               :session   {:flash        true
+                           :cookie-attrs {:http-only true
+                                          :secure    false}
+                           :cookie-name  "secure-ring-session"}
+               :security  {:anti-forgery         true
+                           :xss-protection       {:enable? true
+                                                  :mode    :block}
+                           :frame-options        :sameorigin
+                           :content-type-options :nosniff
+                           :ssl-redirect         false
+                           :hsts                 false}
+               :static    {:resources "public"}
+               :responses {:not-modified-responses true
+                           :absolute-redirects     true
+                           :content-types          true}
+               :proxy     false}
+  }}
