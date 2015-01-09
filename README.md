@@ -1,5 +1,7 @@
 # dfgm
 
+[![Build Status](https://travis-ci.org/Drone-Fighter/dfgm.svg)](https://travis-ci.org/Drone-Fighter/dfgm)
+
 ## Project Maturity
 
 WORK IN PROGRESS
