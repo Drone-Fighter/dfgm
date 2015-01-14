@@ -1,0 +1,16 @@
+(ns dfgm.services.game.proto)
+
+(defprotocol GameService
+  (new-game [this opt] [this])
+  (new-or-join-game [this opt] [this])
+  (find-or-create-game [this opt] [this])
+  (get-game [this id])
+  (get-games [this])
+  (wrap-gm [this handler])
+  (handle-cmd [this cmd])
+  (start-game [this game-id])
+  (cancel-game [this game-id])
+  (start-game-if-possible [this game-id])
+  (inc-score [this game-id drone-id])
+  (find-drone-by-ch [this ch])
+  (find-game-by-drone [this drone]))

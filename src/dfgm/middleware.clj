@@ -45,10 +45,11 @@
               dev? wrap-request-logger
               dev? wrap-request-binding
               dev? wrap-reload
-              dev? wrap-refresh
+              ;; dev? wrap-refresh
               dev? wrap-exceptions
               dev? wrap-sql-logger
-              true (default-middleware conf))))
+              true (default-middleware conf))
+    ))
 
 (defn wrap-middlewares [middlewares handler]
   (reduce (fn [h m] (m h)) handler middlewares))

@@ -3,6 +3,7 @@
             [dfgm.services.app.service :refer :all]
             [dfgm.services.db.service :refer :all]
             [dfgm.services.webserver.service :refer :all]
+            [dfgm.services.game.service :refer :all]
             [puppetlabs.trapperkeeper.app :as tka]
             [puppetlabs.trapperkeeper.config :refer [load-config]]
             [puppetlabs.trapperkeeper.core :as tk]))
@@ -13,7 +14,7 @@
 (defn init []
   (alter-var-root #'system
                   (fn [_] (tk/build-app
-                           [http-kit-service app-service]
+                           [http-kit-service app-service game-service]
                            (-> (load-config "dev-resources/config.edn")
                                (assoc-in [:webserver :port] 8080)))))
 

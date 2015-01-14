@@ -10,7 +10,8 @@
 (defservice app-service
   AppService
   [[:WebServerService add-handler]
-   [:ConfigService get-in-config]]
+   [:ConfigService get-in-config]
+   [:GameService wrap-gm]]
   (init [this context]
         (let [conf (u/deep-merge site-defaults (get-in-config [:app :middleware]))]
           (when (env :dev)
@@ -21,5 +22,6 @@
                (u/parse-ns-var!)
                (apply u/resolve-ns-var!)
                (#(middleware/wrap % conf))
+               wrap-gm
                add-handler))
         context))

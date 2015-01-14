@@ -29,7 +29,8 @@
 
                  ;; misc
                  [environ "1.0.0"]
-                 [clj-time "0.6.0"]]
+                 [clj-time "0.6.0"]
+                 [aleph "0.3.3"]]
   :plugins [[lein-ancient "0.5.5"]
             [lein-environ "1.0.0"]]
   :profiles {:uberjar {:aot [puppetlabs.trapperkeeper.main]}
