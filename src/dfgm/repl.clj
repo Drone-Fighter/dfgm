@@ -1,7 +1,6 @@
 (ns dfgm.repl
   (:require [clojure.tools.namespace.repl :refer [refresh]]
             [dfgm.services.app.service :refer :all]
-            [dfgm.services.db.service :refer :all]
             [dfgm.services.webserver.service :refer :all]
             [dfgm.services.game.service :refer :all]
             [puppetlabs.trapperkeeper.app :as tka]

@@ -4,7 +4,6 @@
             [compojure.core :refer [wrap-routes]]
             [environ.core :refer [env]]
             [dfgm.request :refer [wrap-request-binding]]
-            [dfgm.services.db.core :refer [wrap-sql-logger]]
             [dfgm.utils :as u]
             [prone.middleware :refer [wrap-exceptions]]
             [ring.middleware.defaults :refer :all]
@@ -47,7 +46,6 @@
               dev? wrap-reload
               ;; dev? wrap-refresh
               dev? wrap-exceptions
-              dev? wrap-sql-logger
               true (default-middleware conf))
     ))
 

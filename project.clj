@@ -21,12 +21,6 @@
                  ;; Logging
                  [com.taoensso/timbre "3.3.1"]
 
-                 ;; DB
-                 [mysql/mysql-connector-java "5.1.34"]
-                 [clojure.jdbc "0.3.2"]
-                 [stch-library/sql "0.1.1"]
-                 [clojure.jdbc/clojure.jdbc-hikari "0.3.2"]
-
                  ;; misc
                  [environ "1.0.0"]
                  [clj-time "0.6.0"]

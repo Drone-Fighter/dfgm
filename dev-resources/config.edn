@@ -8,14 +8,6 @@
   :max-ws             4194304
   :max-line           4096}
 
- :db
- {:adapter       :mysql
-  :database-name "dfgm"
-  :server-name   "localhost"
-  :port-number   3306
-  :username      "root"
-  :password      nil}
-
  :app
  {:endpoint "dfgm.routes/main-routes"
 
