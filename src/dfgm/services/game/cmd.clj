@@ -27,7 +27,7 @@
 
 (defmethod handle-cmd :register [gm cmd]
   (let [ch  (:ch cmd)
-        ret (new-or-join-game gm {:ch ch :duration (:duration cmd)})]
+        ret (new-or-join-game gm cmd)]
     (send-cmd! ch (assoc ret :type :registered))
     (start-game-if-possible gm (:game-id ret))))
 
