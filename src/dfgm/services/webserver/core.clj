@@ -1,6 +1,7 @@
 (ns dfgm.services.webserver.core
   (:require [compojure.core :as compojure]
             [dfgm.utils :as u]
+            [environ.core :refer [env]]
             [org.httpkit.server :as kit]
             [taoensso.timbre :as log]))
 
@@ -55,7 +56,10 @@
         handler  (or (bundle-handlers handlers)
                      default-handler)
         opts     (u/deep-merge default-server-config
-                               opts)]
+                               opts)
+        opts (if (env :port)
+               (assoc opts :port (Integer/parseInt (env :port)))
+               opts)]
     (log/infof "Starting web server on port: %d" (:port opts))
     (reset! server (kit/run-server handler opts)))
   context)
