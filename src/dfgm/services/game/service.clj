@@ -60,14 +60,17 @@
               (let [game (get-game this game-id)]
                 (swap! game core/start-game)
                 (cmd/notify-drones @game {:type :started
-                                          :game-id game-id})
+                                          :game-id game-id
+                                          :drones (keys (:drones @game))})
                 (let [timer (timer/schedule-task
                              (:duration @game)
                              (do
                                (swap! game core/stop-game)
                                (cmd/notify-drones @game {:type :ended
                                                          :game-id game-id
-                                                         :winner (:winner @game)})))]
+                                                         :winner (:winner #spy/p @game)
+                                                         :result (into {} (map (juxt first (comp :score last))
+                                                                               (:drones @game)))})))]
                   (swap! game assoc :timer timer))))
   (cancel-game [this game-id]
                (let [game  (get-game this game-id)

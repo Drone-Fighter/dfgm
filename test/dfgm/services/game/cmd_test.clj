@@ -57,10 +57,12 @@
         (send-cmd ch2 {:cmd :register :duration 100})
         (wait-for-message ch 3000)
         (get-result v) => (just {:type "started"
-                                 :game-id #"\d+"})
+                                 :game-id #"\d+"
+                                 :drones (just [#"\d+" #"\d+"])})
         (send-cmd ch {:cmd :inc})
         (wait-for-message ch 3000)
         (get-result v) => (just {:type "ended"
                                  :game-id #"\d+"
-                                 :winner (just [#"\d+"])})
+                                 :winner (just [#"\d+"])
+                                 :result (contains {})})
         ))))
