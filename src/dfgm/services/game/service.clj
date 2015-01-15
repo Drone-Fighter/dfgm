@@ -1,5 +1,6 @@
 (ns dfgm.services.game.service
-  (:require [clj-time.core :as t]
+  (:require [cheshire.core :refer [generate-string]]
+            [clj-time.core :as t]
             [compojure.core :refer [routes GET]]
             [dfgm.services.game.cmd :as cmd]
             [dfgm.services.game.core :as core]
@@ -16,9 +17,13 @@
   []
   (init [this context]
         (log/info "Initializing game service")
-        (let [state {:games (atom {})}]
+        (let [state {:games (atom {})
+                     :watchers (atom [])}]
           (assoc context :state state)))
   (start [this context]
+         (add-watch (get-in context [:state :games])
+                    :w (fn [k a os ns]
+                         (notify-state this)))
          context)
   (stop [this context]
         (log/info "Shutting down game service")
@@ -29,6 +34,9 @@
             (let [games  (get-games this)
                   new-id (core/game-id)
                   game   (atom (core/create-game (merge {:id new-id} opt)))]
+              (add-watch game :wg (fn [k a os ns]
+                                    (notify-state this)))
+              ;; TODO: avoid nested atom
               (swap! games assoc new-id game)
               new-id))
   (find-or-create-game [this]
@@ -91,4 +99,15 @@
                       (some (fn [game]
                               (when (contains? (:drones @game) (:id drone))
                                 @game))
-                            (vals @(get-games this)))))
+                            (vals @(get-games this))))
+  (watch [this ch]
+         (let [chs (get-in (service-context this) [:state :watchers])]
+           (swap! chs conj ch)))
+  (unwatch [this ch]
+           (let [chs (get-in (service-context this) [:state :watchers])]
+             (swap! chs #(remove (fn [c] (= c ch)) %))))
+  (notify-state [this]
+                (let [chs @(get-in (service-context this) [:state :watchers])
+                      ret (generate-string {:games (core/serialize-games @(get-games this))})]
+                  (doseq [ch chs]
+                    (send! ch ret)))))

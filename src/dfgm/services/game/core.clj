@@ -1,6 +1,8 @@
 (ns dfgm.services.game.core
   (:require [clj-time.core :as t]
+            [clj-time.coerce :as c]
             [dfgm.utils :as u]))
+
 
 (defn id-generator []
   (let [i (atom 0)]
@@ -19,7 +21,7 @@
                     :or   {duration 30000
                            capacity 2}}]
   {:id         id
-   :created-at (t/now)
+   :created-at (c/to-long (t/now))
    :started?   false
    :duration   duration
    :capacity   capacity
@@ -48,9 +50,12 @@
   (assoc game :started? true))
 
 (defn start-game [game]
-  (-> game
-      (assoc :started? true)
-      (assoc :started-at (t/now))))
+  (let [st (c/to-long (t/now))]
+    (-> game
+        (assoc :started? true)
+        (assoc :started-at st)
+        (assoc :ends-at (+ (:duration game) st))
+        )))
 
 (defn max-score [game]
   (let [score (comp :score last)]
@@ -70,6 +75,7 @@
 (defn stop-game [game]
   (let [winners (winners game)]
     (-> game
+        (assoc :ended? true)
         (assoc :winner winners)
         (assoc :draw? (draw? game)))))
 
@@ -84,3 +90,21 @@
        (filter (comp joinable? deref last))
        first
        last))
+
+(defn serialize-drone [drone]
+  (dissoc drone :ch))
+
+(defn serialize-drones [drones]
+  (->> drones
+       (map (juxt first (comp serialize-drone last)))
+       (into {})))
+
+(defn serialize-game [game]
+  (-> game
+      (update-in [:drones] serialize-drones)
+      (dissoc :timer)))
+
+(defn serialize-games [games]
+  (->> games
+       (map (juxt first (comp serialize-game deref last)))
+       (into {})))

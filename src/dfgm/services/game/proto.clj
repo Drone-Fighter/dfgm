@@ -13,4 +13,7 @@
   (start-game-if-possible [this game-id])
   (inc-score [this game-id drone-id])
   (find-drone-by-ch [this ch])
-  (find-game-by-drone [this drone]))
+  (find-game-by-drone [this drone])
+  (watch [this ch])
+  (unwatch [this ch])
+  (notify-state [this]))

@@ -1,0 +1,79 @@
+body {
+    background: #efefef;
+    color: #444;
+}
+
+#app {
+    width: 100%;
+}
+
+#games {
+    width: 800px;
+    position: relative;
+    left: 50%;
+    margin-left: -400px;
+    margin-top: 20px;
+}
+
+.game {
+    background: white;
+    border: 1px solid #4ba;
+    margin: 8px;
+    box-shadow:rgba(0, 0, 0, 0.24) 0px 0px 6px 0px;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.game .title {
+    padding: 4px 8px;
+    font-weight: bold;
+    border-bottom: 1px solid #4ba;
+    text-align: center;
+    Background: #4ba;
+    color: white;
+}
+
+.game.ended {
+    border: 1px solid #aaa;
+}
+.game.ended .title {
+    border-bottom: 1px solid #aaa;
+    Background: #aaa;
+}
+
+.game.pending {
+    border: 1px solid #cca;
+}
+.game.pending .title {
+    border-bottom: 1px solid #cca;
+    Background: #cca;
+}
+
+.drone, .drone-sep {
+    display: inline-block;
+    width: 45%;
+    text-align: center;
+    padding: 20px 0
+}
+
+.drone-sep {
+    width: 10%;
+    font-size: 300%;
+    top: -20px;
+    position: relative;
+}
+
+.drone .name {
+    font-weight: bold;
+}
+.drone .score {
+    font-size: 300%;
+    font-weight: bold;
+}
+
+.game .time {
+    position: relative;
+    top: -30px;
+    font-size: 18px;
+    text-align: center;
+}

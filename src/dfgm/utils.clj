@@ -7,6 +7,15 @@
     (apply merge-with deep-merge vals)
     (last vals)))
 
+(defn deep-merge-with
+  [f & maps]
+  (apply
+   (fn m [& maps]
+     (if (every? map? maps)
+       (apply merge-with m maps)
+       (apply f maps)))
+   maps))
+
 (defn parse-ns-var! [s-ns-var]
   (if-let [[_ s-ns s-var] (re-matches
                            #"^([a-zA-Z0-9\.\-]+)/([a-zA-Z0-9\.\-]+)$"
