@@ -5,6 +5,7 @@
   :target-path "target/%s"
   :jvm-opts ["-server"]
   :min-lein-version "2.5.0"
+  :uberjar-name "dfgm.jar"
   :repl-options {:init-ns dfgm.repl}
   :dependencies [[org.clojure/clojure "1.6.0"]
 
