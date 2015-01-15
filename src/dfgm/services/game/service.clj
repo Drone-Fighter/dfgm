@@ -68,7 +68,7 @@
                                (swap! game core/stop-game)
                                (cmd/notify-drones @game {:type :ended
                                                          :game-id game-id
-                                                         :winner (:winner #spy/p @game)
+                                                         :winner (:winner @game)
                                                          :result (into {} (map (juxt first (comp :score last))
                                                                                (:drones @game)))})))]
                   (swap! game assoc :timer timer))))
