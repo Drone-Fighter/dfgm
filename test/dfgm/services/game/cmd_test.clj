@@ -52,15 +52,15 @@
         (send-cmd ch {:cmd :register :duration 100})
         (wait-for-message ch 3000)
         (get-result v) => (just {:type "registered"
-                                 :game-id #"[a-zA-Z0-9\-]+"
-                                 :drone-id #"[a-zA-Z0-9\-]+"})
+                                 :game-id #"\d+"
+                                 :drone-id #"\d+"})
         (send-cmd ch2 {:cmd :register :duration 100})
         (wait-for-message ch 3000)
         (get-result v) => (just {:type "started"
-                                 :game-id #"[a-zA-Z0-9\-]+"})
+                                 :game-id #"\d+"})
         (send-cmd ch {:cmd :inc})
         (wait-for-message ch 3000)
         (get-result v) => (just {:type "ended"
-                                 :game-id #"[a-zA-Z0-9\-]+"
-                                 :winner (just [#"[a-zA-Z0-9\-]+"])})
+                                 :game-id #"\d+"
+                                 :winner (just [#"\d+"])})
         ))))

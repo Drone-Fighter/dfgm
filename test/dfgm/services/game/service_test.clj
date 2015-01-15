@@ -37,8 +37,8 @@
             context (:GameService @(app-context app))
             ret1 (new-or-join-game s)
             ret2 (new-or-join-game s)]
-        ret1 => (just {:game-id #"[0-9a-zA-Z\-]+"
-                       :drone-id #"[0-9a-zA-Z\-]+"})
+        ret1 => (just {:game-id #"\d+"
+                       :drone-id #"\d+"})
         (:game-id ret1) => (:game-id ret2)
         (:drone-id ret1) =not=> (:drone-id ret2))))
   )

@@ -2,10 +2,14 @@
   (:require [clj-time.core :as t]
             [dfgm.utils :as u]))
 
-(defn game-id []
-  (str (java.util.UUID/randomUUID)))
+(defn id-generator []
+  (let [i (atom 0)]
+    (fn []
+      (str (swap! i inc)))))
 
-(def drone-id game-id)
+(def game-id (id-generator))
+
+(def drone-id (id-generator))
 
 (defn create-map []
   ;; TODO
