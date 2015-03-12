@@ -5,7 +5,6 @@
             [dfgm.services.game.cmd :as cmd]
             [dfgm.services.game.core :as core]
             [dfgm.services.game.proto :refer :all]
-            [dfgm.utils :as u]
             [org.httpkit.server :refer [send!]]
             [org.httpkit.timer :as timer]
             [puppetlabs.trapperkeeper.core :refer [defservice]]

@@ -1,11 +1,13 @@
 (ns dfgm.services.game.cmd-test
   (:require [aleph.http :refer [websocket-client]]
             [cheshire.core :refer [parse-string generate-string]]
-            [dfgm.services.app.service :refer [app-service]]
+            [dfgm.app :refer [app-service]]
             [dfgm.services.game.handlers :refer :all]
             [dfgm.services.game.service :refer [game-service]]
-            [dfgm.services.webserver.service :refer [http-kit-service]]
+            [dfgm.system :refer [system-service]]
             [lamina.core :refer [wait-for-result receive-all receive enqueue wait-for-message read-channel]]
+            [materia.services.middleware.service :refer [middleware-service]]
+            [materia.services.webserver.service :refer [http-kit-service]]
             [midje.sweet :refer :all]
             [puppetlabs.trapperkeeper.app :refer [get-service app-context]]
             [puppetlabs.trapperkeeper.testutils.bootstrap :refer [with-app-with-config]]))
@@ -37,7 +39,7 @@
 (facts "ws"
   (fact "connect"
     (with-app-with-config app
-      [game-service http-kit-service app-service]
+      [game-service http-kit-service app-service system-service middleware-service]
       default-conf
       (let [s (get-service app :GameService)
             context (:GameService @(app-context app))

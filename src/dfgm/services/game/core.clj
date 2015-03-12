@@ -1,7 +1,7 @@
 (ns dfgm.services.game.core
   (:require [clj-time.core :as t]
             [clj-time.coerce :as c]
-            [dfgm.utils :as u]))
+            [materia.utils :as u]))
 
 
 (defn id-generator []
